@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <title>Travelia-Explore the World</title>
+    <style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #0e1116;
+  color: #f0f0f0;
+  overflow-x: hidden;
+}
+
+#contact {
+  background: #FFFFFF;
+  padding: 6rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-box {
+  max-width: 700px;
+  background: #FFFFFF;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.contact-box h2 {
+  font-size: 2.5rem;
+  color: #111;
+  margin-bottom: 1rem;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.contact-box h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #3b82f6;
+  margin: 1rem auto 1.5rem;
+  border-radius: 2px;
+}
+
+.contact-lead {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.contact-box p {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.contact-button {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+}
+
+.contact-button:hover {
+  background-color: #2563eb;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-item {
+  position: relative;
+}
+
+.form-item input,
+.form-item textarea {
+  width: 100%;
+  padding: 10px 6px;
+  border: none;
+  border-bottom: 2px solid black;
+  background: transparent;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+}
+
+.form-item label {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: grey;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.form-item:has(textarea) label {
+  top: 75%;
+}
+
+.form-item input:focus + label,
+.form-item textarea:focus + label,
+.form-item input:not(:placeholder-shown) + label,
+.form-item textarea:not(:placeholder-shown) + label {
+  top: -10px;
+  font-size: 12px;
+  color: black;
+}
+
+.form-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 12px 0;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.form-button:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.form-button:active {
+  background-color: #3270D3;
+}
+    </style>
+</head>
+<body>
+    <section id="contact">
+  <div class="contact-box">
+    <h2>Contact</h2>
+    <p class="contact-lead">Interested in a joint project?</p>
+    <p>Write to me directly or call me – I look forward to exciting ideas!</p>
+    <form class="contact-form" method="POST" action="#contact" id="contactForm">
+      <div class="form-item">
+        <label for="contact-name">Full Name</label>
+        <input id="contact-name" name="name" type="text" required>
+      </div>
+      <div class="form-item">
+        <label for="contact-email">E-Mail</label>
+        <input id="contact-email" name="email" type="email" required>
+      </div>
+      <div class="form-item">
+        <label for="contact-subject">Subject</label>
+        <input id="contact-subject" name="subject" type="text" required>
+      </div>
+      <div class="form-item">
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" rows="4" required></textarea>
+      </div>
+      <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+      <button class="form-button" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+<script>
+    document.querySelectorAll('.form-item input, .form-item textarea').forEach(input => {
+  const label = input.parentElement.querySelector('label');
+
+  input.addEventListener('focus', () => {
+    label.style.top = '-10px';
+    label.style.fontSize = '12px';
+    label.style.color = 'black';
+  });
+
+  input.addEventListener('blur', () => {
+    if (input.value.trim() === '') {
+      if (input.tagName.toLowerCase() === 'textarea') {
+        label.style.top = '75%';
+      } else {
+        label.style.top = '50%';
+      }
+      label.style.fontSize = '16px';
+      label.style.color = 'grey';
+    }
+  });
+});
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('contact-name').value.trim();
+  const email = document.getElementById('contact-email').value.trim();
+  const subject = document.getElementById('contact-subject').value.trim();
+  const message = document.getElementById('contact-message').value.trim();
+  if (!name || !email || !subject || !message) return;
+  const item = {
+    id: Date.now().toString(),
+    name,
+    email,
+    subject,
+    message,
+    createdAt: new Date().toISOString()
+  };
+  const items = JSON.parse(localStorage.getItem('messages') || '[]');
+  items.push(item);
+  localStorage.setItem('messages', JSON.stringify(items));
+  this.reset();
+  alert('Message sent successfully');
+});
+</script>
+    
+</body>
+</html>

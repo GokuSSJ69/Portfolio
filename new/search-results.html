@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Travelia</title>
+    <meta name="title" content="Search Results - Travelia">
+    <meta name="description" content="Search results for your travel destination">
+    <link rel="shortcut icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header class="header" data-header>
+        <div class="container">
+            <a href="front.html" class="logo">
+                <img src="./assets/images/logo.svg" width="187" height="38" alt="logo">
+            </a>
+            <nav class="navbar" data-navbar>
+                <div class="navbar-top">
+                    <a href="front.html" class="logo">
+                        <img src="./assets/images/logo.svg" width="187" height="38" alt="Travelia logo">
+                    </a>
+                    <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler>
+                        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                    </button>
+                </div>
+                <ul class="navbar-list">
+                    <li class="navbar-item">
+                        <a href="front.html" class="navbar-link active" data-nav-link>Home</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="front.html#services" class="navbar-link" data-nav-link>Services</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="front.html#about" class="navbar-link" data-nav-link>About Us</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="front.html#contact" class="navbar-link" data-nav-link>Contact</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a href="front.html#gallery" class="navbar-link" data-nav-link>Gallery</a>
+                    </li>
+                </ul>
+                <div class="header-action" id="headerAction">
+                    <a href="login.html" class="login-btn" id="loginBtn">Login</a>
+                    <a href="signup.html" class="btn btn-primary" id="signupBtn">Sign up</a>
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <span class="user-name" id="userName"></span>
+                        <button class="btn btn-secondary logout-btn" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </nav>
+            <button class="nav-toggle-btn" aria-label="open menu" data-nav-toggler>
+                <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            </button>
+            <div class="overlay" data-overlay data-nav-toggler></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section desti search-results-section" style="padding-top: 150px;">
+            <div class="container">
+                <div class="search-results-header" style="text-align: center; margin-bottom: 40px;">
+                    <h1 class="h2 title">Search Results</h1>
+                    <p class="section-subtitle" style="margin-top: 10px;">Showing results for "<span id="searchQuery"></span>"</p>
+                </div>
+
+                <div id="searchResultsContainer" class="desti-list">
+                    <!-- Search results will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="front.js"></script>
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/search-results.js"></script>
+    <script>
+        // Update header based on login state
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            const userMenu = document.getElementById('userMenu');
+            const userName = document.getElementById('userName');
+            
+            if (isLoggedIn) {
+                const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                if (user.name) {
+                    userName.textContent = `Welcome, ${user.name}`;
+                }
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+                userMenu.style.display = 'flex';
+            } else {
+                loginBtn.style.display = 'block';
+                signupBtn.style.display = 'block';
+                userMenu.style.display = 'none';
+            }
+        });
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
